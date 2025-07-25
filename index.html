@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librio - Library Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-book-open"></i> Librio</h1>
+            <p>MODERN LIBRARY MANAGEMENT SYSTEM </p>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="menu">
+                    <button class="active" id="dashboardBtn"><i class="fas fa-home"></i> Dashboard</button>
+                    <button id="booksBtn"><i class="fas fa-book"></i> Books</button>
+                    <button id="addBookBtn"><i class="fas fa-plus-circle"></i> Add Book</button>
+                    <button id="membersBtn"><i class="fas fa-users"></i> Members</button>
+                    <button id="checkoutBtn"><i class="fas fa-exchange-alt"></i> Check In/Out</button>
+                </div>
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3 id="totalBooks">0</h3>
+                        <p>Total Books</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="availableBooks">0</h3>
+                        <p>Available</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="checkedOut">0</h3>
+                        <p>Checked Out</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <!-- Dashboard View -->
+                <div id="dashboardView" class="view active-view">
+                    <h2><i class="fas fa-home"></i> Dashboard</h2>
+                    <div class="recent-activity">
+                        <h3>Recent Activity</h3>
+                        <ul id="activityLog"></ul>
+                    </div>
+                    <div class="quick-stats">
+                        <div class="chart-container">
+                            <canvas id="booksChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Books View -->
+                <div id="booksView" class="view">
+                    <div class="view-header">
+                        <h2><i class="fas fa-book"></i> Book Inventory</h2>
+                        <div class="search-box">
+                            <input type="text" id="bookSearch" placeholder="Search books...">
+                            <button id="searchBookBtn"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="booksTable">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>ISBN</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="booksTableBody">
+                                <!-- Books will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Add Book View -->
+                <div id="addBookView" class="view">
+                    <h2><i class="fas fa-plus-circle"></i> Add New Book</h2>
+                    <form id="addBookForm" class="form">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="author">Author</label>
+                            <input type="text" id="author" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="isbn">ISBN</label>
+                            <input type="text" id="isbn" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" id="quantity" min="1" value="1" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Add Book</button>
+                    </form>
+                </div>
+
+                <!-- Members View -->
+                <div id="membersView" class="view">
+                    <div class="view-header">
+                        <h2><i class="fas fa-users"></i> Members</h2>
+                        <button id="addMemberBtn" class="action-btn">+ Add Member</button>
+                    </div>
+                    <div class="table-container">
+                        <table id="membersTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Books Borrowed</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="membersTableBody">
+                                <!-- Members will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Checkout View -->
+                <div id="checkoutView" class="view">
+                    <h2><i class="fas fa-exchange-alt"></i> Check In/Out Books</h2>
+                    <div class="checkout-container">
+                        <div class="checkout-form">
+                            <h3>Check Out Book</h3>
+                            <form id="checkoutForm">
+                                <div class="form-group">
+                                    <label for="memberSelect">Member</label>
+                                    <select id="memberSelect" required>
+                                        <option value="">Select a member</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bookSelect">Book</label>
+                                    <select id="bookSelect" required>
+                                        <option value="">Select a book</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="submit-btn">Check Out</button>
+                            </form>
+                        </div>
+                        <div class="checkin-form">
+                            <h3>Check In Book</h3>
+                            <form id="checkinForm">
+                                <div class="form-group">
+                                    <label for="checkinBookSelect">Book</label>
+                                    <select id="checkinBookSelect" required>
+                                        <option value="">Select a book to check in</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="submit-btn">Check In</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Member Modal -->
+    <div id="memberModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Add New Member</h2>
+            <form id="addMemberForm" class="form">
+                <div class="form-group">
+                    <label for="memberName">Full Name</label>
+                    <input type="text" id="memberName" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberEmail">Email</label>
+                    <input type="email" id="memberEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberPhone">Phone</label>
+                    <input type="tel" id="memberPhone" required>
+                </div>
+                <button type="submit" class="submit-btn">Add Member</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
